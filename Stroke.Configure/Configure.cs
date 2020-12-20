@@ -14,7 +14,8 @@ namespace Stroke.Configure
     {
         Action CurrentAction;
         ActionPackage CurrentActionPackage;
-        bool spy = false;
+        internal static bool Spy = false;
+        internal static Control Receptor = null;
 
         public Configure()
         {
@@ -24,7 +25,27 @@ namespace Stroke.Configure
             }
             catch
             {
-                LoadDefaultSetting();
+                if (Settings.StrokeButton == MouseButtons.None || Settings.Pen == null || Settings.Gestures == null || Settings.ActionPackages == null)
+                {
+                    LoadDefaultSetting();
+                }
+                else
+                {
+                    if (Settings.Assemblies == null)
+                    {
+                        Settings.Assemblies = new List<string>();
+                    }
+
+                    if (Settings.Namespaces == null)
+                    {
+                        Settings.Namespaces = new List<string>();
+                    }
+
+                    if (Settings.Filtrations == null)
+                    {
+                        Settings.Filtrations = new List<string>();
+                    }
+                }
             }
 
             InitializeComponent();
@@ -32,6 +53,7 @@ namespace Stroke.Configure
             PenConfigure = new PenConfigure();
             GestureConfigure = new GestureConfigure();
             CompileConfigure = new CompileConfigure();
+            FiltrationConfigure = new FiltrationConfigure();
             ContextMenuStripActionPackage = new ContextMenuStrip();
             ContextMenuStripAction = new ContextMenuStrip();
             ToolStripMenuItem ToolStripMenuItemAddActionPackage = new ToolStripMenuItem();
@@ -57,7 +79,7 @@ namespace Stroke.Configure
 
         private bool MouseHook_MouseAction(MouseHook.MouseActionArgs args)
         {
-            if (spy)
+            if (Spy && Receptor != null)
             {
                 try
                 {
@@ -69,8 +91,9 @@ namespace Stroke.Configure
                         StringBuilder path = new StringBuilder(1024);
                         uint size = (uint)path.Capacity;
                         API.QueryFullProcessImageName(hProcess, 0, path, ref size);
-                        textBoxCode.Text = textBoxCode.Text.TrimEnd('\n').TrimEnd('\r') + "\r\n" + Regex.Replace(path.ToString(), @"([\\\.\{\}\[\]\(\)\^\$\|\*\+\?])", @"\$1");
-                        spy = false;
+                        Receptor.Text = Receptor.Text.TrimEnd('\n').TrimEnd('\r') + (Receptor.Text.Length == 0 ? "" : "\r\n") + Regex.Replace(path.ToString(), @"([\\\.\{\}\[\]\(\)\^\$\|\*\+\?])", @"\$1");
+                        Spy = false;
+                        Receptor = null;
                         Cursor.Current = Cursors.Default;
                     }
                 }
@@ -119,6 +142,8 @@ namespace Stroke.Configure
 
             Settings.Namespaces = new List<string>();
             Settings.Namespaces.Add("System");
+
+            Settings.Filtrations = new List<string>();
 
         }
 
@@ -225,6 +250,11 @@ namespace Stroke.Configure
         private void buttonCompile_Click(object sender, EventArgs e)
         {
             CompileConfigure.ShowDialog();
+        }
+
+        private void buttonFiltration_Click(object sender, EventArgs e)
+        {
+            FiltrationConfigure.ShowDialog();
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -351,7 +381,8 @@ namespace Stroke.Configure
         {
             if (CurrentActionPackage != null)
             {
-                spy = true;
+                Spy = true;
+                Receptor = textBoxCode;
                 Cursor.Current = Cursors.Cross;
             }
         }

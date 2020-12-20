@@ -61,6 +61,12 @@
     <Compile Include="Configure.Designer.cs">
       <DependentUpon>Configure.cs</DependentUpon>
     </Compile>
+    <Compile Include="FiltrationConfigure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FiltrationConfigure.Designer.cs">
+      <DependentUpon>FiltrationConfigure.cs</DependentUpon>
+    </Compile>
     <Compile Include="GestureCanvas.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +93,9 @@
     <EmbeddedResource Include="Configure.resx">
       <DependentUpon>Configure.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FiltrationConfigure.resx">
+      <DependentUpon>FiltrationConfigure.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GestureCanvas.resx">
       <DependentUpon>GestureCanvas.cs</DependentUpon>

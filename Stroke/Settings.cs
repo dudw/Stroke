@@ -13,6 +13,7 @@ namespace Stroke
         public static List<ActionPackage> ActionPackages;
         public static List<string> Assemblies;
         public static List<string> Namespaces;
+        public static List<string> Filtrations;
 
 
         public static void SaveSettings()
@@ -24,6 +25,7 @@ namespace Stroke
             settings.Add("ActionPackages", ActionPackages);
             settings.Add("Assemblies", Assemblies);
             settings.Add("Namespaces", Namespaces);
+            settings.Add("Filtrations", Filtrations);
 
             using (FileStream fileStream = new FileStream("Settings", FileMode.Create))
             {
@@ -45,6 +47,7 @@ namespace Stroke
             ActionPackages = (List<ActionPackage>)settings["ActionPackages"];
             Assemblies = (List<string>)settings["Assemblies"];
             Namespaces = (List<string>)settings["Namespaces"];
+            Filtrations = (List<string>)settings["Filtrations"];
         }
 
     }

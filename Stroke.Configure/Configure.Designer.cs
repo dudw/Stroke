@@ -35,6 +35,7 @@
             this.ToolStripMenuItemAddAction = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolStripMenuItemRemoveAction = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonCompile = new System.Windows.Forms.Button();
+            this.buttonFiltration = new System.Windows.Forms.Button();
             this.panel.SuspendLayout();
             this.ContextMenuStripActionPackage.SuspendLayout();
             this.ContextMenuStripAction.SuspendLayout();
@@ -42,8 +43,8 @@
             // 
             // panel
             // 
-            this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.panel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel.BackColor = System.Drawing.Color.AliceBlue;
             this.panel.Controls.Add(this.textBoxCode);
@@ -54,14 +55,14 @@
             this.panel.Location = new System.Drawing.Point(12, 40);
             this.panel.Name = "panel";
             this.panel.Size = new System.Drawing.Size(920, 510);
-            this.panel.TabIndex = 6;
+            this.panel.TabIndex = 7;
             // 
             // textBoxCode
             // 
             this.textBoxCode.AcceptsReturn = true;
             this.textBoxCode.AcceptsTab = true;
-            this.textBoxCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxCode.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxCode.Font = new System.Drawing.Font("Consolas", 12F);
@@ -100,7 +101,7 @@
             // 
             // textBoxName
             // 
-            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.textBoxName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxName.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.textBoxName.Location = new System.Drawing.Point(230, 12);
@@ -111,7 +112,7 @@
             // 
             // treeViewAction
             // 
-            this.treeViewAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.treeViewAction.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
             | System.Windows.Forms.AnchorStyles.Left)));
             this.treeViewAction.HideSelection = false;
             this.treeViewAction.Location = new System.Drawing.Point(3, 3);
@@ -127,7 +128,7 @@
             this.buttonOK.Location = new System.Drawing.Point(806, 8);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(60, 25);
-            this.buttonOK.TabIndex = 4;
+            this.buttonOK.TabIndex = 5;
             this.buttonOK.Text = "确定";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -138,7 +139,7 @@
             this.buttonCancel.Location = new System.Drawing.Point(872, 8);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(60, 25);
-            this.buttonCancel.TabIndex = 5;
+            this.buttonCancel.TabIndex = 6;
             this.buttonCancel.Text = "取消";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -231,6 +232,16 @@
             this.buttonCompile.UseVisualStyleBackColor = true;
             this.buttonCompile.Click += new System.EventHandler(this.buttonCompile_Click);
             // 
+            // buttonFiltration
+            // 
+            this.buttonFiltration.Location = new System.Drawing.Point(401, 8);
+            this.buttonFiltration.Name = "buttonFiltration";
+            this.buttonFiltration.Size = new System.Drawing.Size(100, 25);
+            this.buttonFiltration.TabIndex = 4;
+            this.buttonFiltration.Text = "过滤设置";
+            this.buttonFiltration.UseVisualStyleBackColor = true;
+            this.buttonFiltration.Click += new System.EventHandler(this.buttonFiltration_Click);
+            // 
             // Configure
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -238,6 +249,7 @@
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(944, 561);
             this.ControlBox = false;
+            this.Controls.Add(this.buttonFiltration);
             this.Controls.Add(this.buttonCompile);
             this.Controls.Add(this.buttonPen);
             this.Controls.Add(this.buttonGesture);
@@ -275,6 +287,7 @@
         private PenConfigure PenConfigure;
         private GestureConfigure GestureConfigure;
         private CompileConfigure CompileConfigure;
+        private FiltrationConfigure FiltrationConfigure;
         private System.Windows.Forms.ContextMenuStrip ContextMenuStripActionPackage;
         private System.Windows.Forms.ContextMenuStrip ContextMenuStripAction;
         private System.Windows.Forms.ToolStripMenuItem ToolStripMenuItemAddActionPackage;
@@ -284,6 +297,7 @@
         private System.Windows.Forms.Button buttonSpy;
         private System.Windows.Forms.TextBox textBoxCode;
         private System.Windows.Forms.Button buttonCompile;
+        private System.Windows.Forms.Button buttonFiltration;
     }
 }
 

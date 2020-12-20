@@ -22,6 +22,7 @@ namespace Stroke
         private readonly int threshold = 80;
         private int mark = 0;
         public static IntPtr CurrentWindow;
+        public static string CurrentProcessImagePath;
         public static Point KeyPoint;
 
         private void InitializeComponent()
@@ -81,6 +82,19 @@ namespace Stroke
                 {
                     KeyPoint = args.Location;
                     CurrentWindow = API.GetAncestor(API.WindowFromPoint(new API.POINT(KeyPoint.X, KeyPoint.Y)), API.GetAncestorFlags.GA_ROOT);
+                    API.GetWindowThreadProcessId(CurrentWindow, out uint pid);
+                    IntPtr hProcess = API.OpenProcess(API.AccessRights.PROCESS_QUERY_INFORMATION, false, (int)pid);
+                    StringBuilder path = new StringBuilder(1024);
+                    uint size = (uint)path.Capacity;
+                    API.QueryFullProcessImageName(hProcess, 0, path, ref size);
+                    CurrentProcessImagePath = path.ToString();
+                    foreach (string filtration in Settings.Filtrations)
+                    {
+                        if (Regex.IsMatch(CurrentProcessImagePath, filtration))
+                        {
+                            return false;
+                        }
+                    }
                     stroking = true;
                     this.TopMost = true;
                     lastPoint = args.Location;
@@ -122,18 +136,12 @@ namespace Stroke
 
                         if (similarity > threshold)
                         {
-                            API.GetWindowThreadProcessId(CurrentWindow, out uint pid);
-                            IntPtr hProcess = API.OpenProcess(API.AccessRights.PROCESS_QUERY_INFORMATION, false, (int)pid);
-                            StringBuilder path = new StringBuilder(1024);
-                            uint size = (uint)path.Capacity;
-                            API.QueryFullProcessImageName(hProcess, 0, path, ref size);
-
                             for (int i = Settings.ActionPackages.Count - 1; i > -1; i--)
                             {
                                 bool match = false;
-                                foreach (string item in Settings.ActionPackages[i].Code.Replace("\r", "").Split('\n'))
+                                foreach (string pattern in Settings.ActionPackages[i].Code.Replace("\r", "").Split('\n'))
                                 {
-                                    if (item != "" && Regex.IsMatch(path.ToString(), item))
+                                    if (pattern != "" && Regex.IsMatch(CurrentProcessImagePath, pattern))
                                     {
                                         match = true;
                                         break;
@@ -235,18 +243,12 @@ namespace Stroke
 
                 if (gesture != "#")
                 {
-                    API.GetWindowThreadProcessId(CurrentWindow, out uint pid);
-                    IntPtr hProcess = API.OpenProcess(API.AccessRights.PROCESS_QUERY_INFORMATION, false, (int)pid);
-                    StringBuilder path = new StringBuilder(1024);
-                    uint size = (uint)path.Capacity;
-                    API.QueryFullProcessImageName(hProcess, 0, path, ref size);
-
                     for (int i = Settings.ActionPackages.Count - 1; i > -1; i--)
                     {
                         bool match = false;
-                        foreach (string item in Settings.ActionPackages[i].Code.Replace("\r", "").Split('\n'))
+                        foreach (string pattern in Settings.ActionPackages[i].Code.Replace("\r", "").Split('\n'))
                         {
-                            if (item != "" && Regex.IsMatch(path.ToString(), item))
+                            if (pattern != "" && Regex.IsMatch(CurrentProcessImagePath, pattern))
                             {
                                 match = true;
                                 break;
